@@ -1,0 +1,11 @@
+# tajné hodnoty pro lokální běh – NIKDY necommitovat
+.dev.vars
+
+# závislosti a dočasné soubory
+node_modules/
+.wrangler/
+dist/
+*.log
+
+# uložená stránka z Instagramu – jen pracovní podklad, 24 MB balast
+vzor-listek_files/

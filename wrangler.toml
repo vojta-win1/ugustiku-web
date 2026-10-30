@@ -1,0 +1,18 @@
+#  Nastavení projektu pro Cloudflare Pages.
+#
+#  Lokální spuštění:  npx wrangler pages dev
+#  Databáze:          npx wrangler d1 execute ugustiku --local --file=schema.sql
+
+name = "ugustiku"
+compatibility_date = "2026-10-01"
+
+# Složka se statickými soubory (CSS, JS, fotky, písma).
+# Serverová část je ve složce functions/ – tu Cloudflare pozná sám.
+pages_build_output_dir = "public"
+
+[[d1_databases]]
+binding = "DB"             # takhle se na databázi saháme v kódu: env.DB
+database_name = "ugustiku"
+# database_id doplníme ve fázi 4, až databázi založíme na Cloudflare.
+# Pro lokální běh (--local) se nepoužívá, data jsou ve složce .wrangler/.
+database_id = "zatim-nevyplneno"

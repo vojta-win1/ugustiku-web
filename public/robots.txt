@@ -1,0 +1,5 @@
+# Veřejný web se indexovat má, administrace ne.
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /api/

@@ -1,0 +1,7 @@
+# Vzor souboru .dev.vars pro lokální běh.
+#
+# Zkopíruj jako .dev.vars (ten je v .gitignore a NIKDY se necommituje)
+# a vyplň. Používá se až od fáze 2 – pro fázi 1 ho nepotřebuješ.
+#
+# Hodnotu vyrobíš příkazem:  node scripts/hash-hesla.mjs
+ADMIN_HESLO_HASH="pbkdf2$..."

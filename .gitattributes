@@ -1,0 +1,7 @@
+# Konce řádků držíme v repozitáři jednotně (LF), ať se soubory netváří
+# jako změněné jen proto, že je otevřel Windows.
+* text=auto eol=lf
+
+*.jpg  binary
+*.png  binary
+*.woff2 binary
