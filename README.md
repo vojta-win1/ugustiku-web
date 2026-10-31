@@ -6,8 +6,9 @@ který si restaurace sama spravuje přes administraci.
 Postaveno na **Cloudflare Pages** (statické soubory + serverové funkce) a
 databázi **Cloudflare D1**. Všechno se vejde do bezplatného tarifu.
 
-> **Stav:** hotovo. Web je připravený k nasazení — postup krok za krokem
-> je v **[NASAZENI.md](NASAZENI.md)**.
+> **Stav:** nasazeno a běží na **<https://ugustiku-web.pages.dev>**.
+> Projekt v Cloudflare se jmenuje `ugustiku-web`, databáze D1 `ugustiku`.
+> Postup nasazení krok za krokem je v **[NASAZENI.md](NASAZENI.md)**.
 
 ---
 
@@ -324,6 +325,10 @@ je v **[NASAZENI.md](NASAZENI.md)**.
 
 Po nasazení se web aktualizuje prostým `git push` do větve `main`.
 Lístek se tímhle měnit nemusí, ten se píše v administraci.
+
+Secrety se připojují k nasazení ve chvíli, kdy vzniká. Když tedy změníš
+`ADMIN_HESLO_HASH`, musí po tom přijít nové nasazení – jinak běží dál
+to staré s původním heslem.
 
 Dokud web běží na dočasné adrese `*.pages.dev`, posílá hlavičku `noindex` —
 aby se adresa, která jednou zmizí, nedostala do Googlu a nekonkurovala pak
