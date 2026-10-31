@@ -6,8 +6,8 @@ který si restaurace sama spravuje přes administraci.
 Postaveno na **Cloudflare Pages** (statické soubory + serverové funkce) a
 databázi **Cloudflare D1**. Všechno se vejde do bezplatného tarifu.
 
-> **Stav:** hotové fáze 1–3 (veřejný web, přihlášení, editor, export).
-> Zbývá fáze 4 – nasazení na Cloudflare.
+> **Stav:** hotovo. Web je připravený k nasazení — postup krok za krokem
+> je v **[NASAZENI.md](NASAZENI.md)**.
 
 ---
 
@@ -22,6 +22,7 @@ databázi **Cloudflare D1**. Všechno se vejde do bezplatného tarifu.
 | `public/admin/` | Vzhled a ovládání editoru lístku a exportu |
 | `public/admin/vendor/` | Stažené knihovny pro export (viz `PUVOD.txt`) |
 | `navrh/` | Schválený návrh designu a vzor lístku z Instagramu. Nepoužívá se za běhu |
+| `NASAZENI.md` | Návod, jak web dostat na internet |
 | `schema.sql`, `seed.sql` | Struktura databáze a ukázková data |
 
 Soubory v `lib/` jsou schválně **mimo** `functions/`. Cloudflare Pages totiž
@@ -316,9 +317,21 @@ Staženou podmnožinou je `latin-ext`. Obyčejný `latin` neobsahuje
 - Kontakt v patičce letáku (konstanta `KONTAKT` v `public/admin/export.js`).
 - Nasazení na Cloudflare — fáze 4.
 
+## Nasazení
+
+Postup krok za krokem — účet, databáze D1, heslo, napojení na GitHub —
+je v **[NASAZENI.md](NASAZENI.md)**.
+
+Po nasazení se web aktualizuje prostým `git push` do větve `main`.
+Lístek se tímhle měnit nemusí, ten se píše v administraci.
+
+Dokud web běží na dočasné adrese `*.pages.dev`, posílá hlavičku `noindex` —
+aby se adresa, která jednou zmizí, nedostala do Googlu a nekonkurovala pak
+skutečné doméně. Na vlastní doméně se pravidlo samo přestane uplatňovat.
+
 ## Doména
 
-Web poběží zatím na adrese `*.pages.dev`. Doména **ugustiku.cz** se zatím
-nikam nepřepojuje a do DNS se nesahá — běží na ní e-mail přes Seznam Email
-Profi (záznamy MX, SPF, DKIM), který se nesmí rozbít. Přepojení se udělá
-až nakonec a zvlášť.
+Doména **ugustiku.cz** se zatím nikam nepřepojuje a do DNS se nesahá — běží
+na ní e-mail přes Seznam Email Profi (záznamy MX, SPF, DKIM), který se nesmí
+rozbít. Přepojení se udělá až nakonec a zvlášť; na co si dát pozor, je
+na konci [NASAZENI.md](NASAZENI.md).

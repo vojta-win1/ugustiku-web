@@ -5,7 +5,7 @@
   neudělá samostatnou adresu na webu, ale použije ho jako mezivrstvu.
 */
 
-export async function onRequest({ next }) {
+export async function onRequest({ request, next }) {
   const odpoved = await next();
 
   // Statické soubory (obrázky, písma) necháme být, hlavičky patří ke stránkám.
@@ -13,6 +13,19 @@ export async function onRequest({ next }) {
   if (!typ.includes('text/html')) return odpoved;
 
   const h = new Headers(odpoved.headers);
+
+  /*
+    Dočasná adresa *.pages.dev se nemá dostat do vyhledávačů. Kdyby se
+    zaindexovala, konkurovala by pak v Googlu skutečné doméně ugustiku.cz
+    a lidem by se nabízela adresa, která jednou zmizí.
+
+    Jakmile web poběží na vlastní doméně, tohle pravidlo se samo přestane
+    uplatňovat – nemusí se na nic pamatovat. Totéž platí pro náhledy
+    jednotlivých větví, které Cloudflare vytváří taky na *.pages.dev.
+  */
+  if (new URL(request.url).hostname.endsWith('.pages.dev')) {
+    h.set('x-robots-tag', 'noindex, nofollow');
+  }
 
   // Prohlížeč nemá hádat typ souboru podle obsahu.
   h.set('x-content-type-options', 'nosniff');
