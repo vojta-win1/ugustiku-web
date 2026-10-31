@@ -204,8 +204,9 @@ git branch -M main && git push -u origin main
 
 6. **Save and Deploy.**
 
-První nasazení trvá asi minutu. **Nelekni se, že web ještě nefunguje** —
-chybí heslo, to nastavíme hned.
+První nasazení trvá asi minutu. **Veřejný web už po něm funguje** — jméno
+a heslo potřebuje jen přihlášení do administrace, které nastavíme v kroku 8.
+Do té doby `/admin` heslo nepřijme.
 
 **Ověření:** v projektu je nasazení se zeleným **Success** a adresa
 `https://ugustiku.pages.dev`.
