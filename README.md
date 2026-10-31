@@ -1,6 +1,6 @@
 # U Gustíků — web restaurace
 
-Web rodinné restaurace U Gustíků v Rehenicích s týdenním jídelním lístkem,
+Web rodinné restaurace U Gustíků v Řehenicích s týdenním jídelním lístkem,
 který si restaurace sama spravuje přes administraci.
 
 Postaveno na **Cloudflare Pages** (statické soubory + serverové funkce) a
@@ -314,13 +314,23 @@ Staženou podmnožinou je `latin-ext`. Obyčejný `latin` neobsahuje
 
 ## Co ještě není hotové
 
-- `[ULICE A ČÍSLO]`, `[TELEFON]`, `[E-MAIL]` a otevírací doba jsou v návrhu
-  zatím zástupné. Jsou v `navrh/index.html`; po doplnění stačí pustit
-  `node scripts/udelat-sablonu.mjs`.
-- Modrý pruh nahoře („Návrh nového webu…“) se před ostrým spuštěním smaže.
-- Mapa v kontaktu je zatím jen rámeček.
-- Kontakt v patičce letáku (konstanta `KONTAKT` v `public/admin/export.js`).
-- Nasazení na Cloudflare — fáze 4.
+- **Fotky** v úvodu a v galerii jsou zatím orientační, čekají na skutečné.
+- **Doména ugustiku.cz** se zatím nepřepojuje – viz níž.
+
+### Kontakty – kde se mění
+
+Skutečné údaje jsou dopleněné (Kříváček 17, 251 67 Řehenice,
++420 776 107 716, klenhova@ugustiku.cz, Po–Pá 6:00–14:00). Kdyby se
+něco změnilo, jsou na **dvou** místech a musí se srovnat obě:
+
+1. `navrh/index.html` – web. Po úpravě pusť `node scripts/udelat-sablonu.mjs`,
+   který z něj vyrobí `lib/sablona.js`.
+2. `public/admin/export.js` – konstanta `KONTAKT`, patička letáku A4.
+
+Telefon a e-mail v sekci Kontakt jsou odkazy `tel:` a `mailto:`, aby se
+na mobilu daly použít jedním klepnutím. Mapa je odkaz do Mapy.com –
+žádný cizí obsah se do stránky nenahrává, takže nikomu nehlásí,
+kdo si web otevřel.
 
 ## Nasazení
 

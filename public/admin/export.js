@@ -17,12 +17,13 @@
   'use strict';
 
   /* ------------------------------------------------------------------
-     Kontakt do patičky letáku.
-     AŽ BUDOU ZNÁMÉ SKUTEČNÉ ÚDAJE, UPRAV JE TADY.
+     Kontakt do patičky letáku. Musí sedět s tím, co je na webu
+     v sekci Kontakt (navrh/index.html) – mění se to na obou místech.
      ------------------------------------------------------------------ */
   var KONTAKT = {
-    adresa: '[ULICE A ČÍSLO], Rehenice',
-    telefon: '[TELEFON]',
+    adresa: 'Kříváček 17, Řehenice',
+    telefon: '+420 776 107 716',
+    doba: 'Po–Pá 6:00–14:00',
     instagram: '@u_gustiku',
   };
 
@@ -134,7 +135,9 @@
     var kontakt = e('div', 'exKontakt');
     var vlevo = e('span');
     vlevo.appendChild(e('strong', null, 'U Gustíků'));
-    vlevo.appendChild(document.createTextNode(' · ' + KONTAKT.adresa + ' · ' + KONTAKT.telefon));
+    vlevo.appendChild(document.createTextNode(
+      ' · ' + KONTAKT.adresa + ' · ' + KONTAKT.telefon + ' · ' + KONTAKT.doba
+    ));
     kontakt.appendChild(vlevo);
     kontakt.appendChild(e('span', null, KONTAKT.instagram));
     pata.appendChild(kontakt);

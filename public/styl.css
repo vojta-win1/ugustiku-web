@@ -263,3 +263,18 @@ footer{background:var(--night);color:var(--on-dark);overflow:hidden}
   .tab .plny,.tab small{display:none}
   .tab .zkratka{display:block}
 }
+
+/* ---------------------------  kontakty  --------------------------- */
+
+/*
+  Telefon a e-mail jsou odkazy, aby se daly na mobilu vyťukat jedním
+  klepnutím. Barvu i tloušťku ale dědí z okolí, takže vypadají přesně
+  jako předtím – jen se dají použít.
+*/
+.cgrid .v a{color:inherit;text-decoration:none}
+.cgrid .v a:hover{text-decoration:underline}
+
+/* Mapa je odkaz do Mapy.com. Nic se odtud nenačítá, takže stránka
+   nikomu cizímu nehlásí, kdo si ji otevřel. */
+a.map{text-decoration:none}
+a.map:hover{color:var(--blue)}
