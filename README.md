@@ -245,6 +245,14 @@ Nastaví heslo do administrace. Potřebuje opravdový terminál — přes rouru
 schválně nefunguje, aby heslo nezůstalo v historii příkazů.
 
 ```bash
+node scripts/zkontroluj-heslo.mjs
+```
+Řekne, jestli heslo odpovídá otisku – **jen u tebe na počítači**, nic se
+nikam neposlá. K čemu to je: když se nejde přihlásit, zkoušet to na webu
+je drahé, protože po pěti špatných pokusech se přihlašování na 15 minut
+zavře. Tohle se dá zkoušet donekonečna.
+
+```bash
 node scripts/udelat-sablonu.mjs
 ```
 Vygeneruje `lib/sablona.js` z `navrh/index.html`. Pusť, když se změní návrh.
