@@ -1,7 +1,7 @@
 # Nasazení na Cloudflare — krok za krokem
 
 Tenhle návod dostane web z tvého počítače na internet, na adresu
-`https://ugustiku.pages.dev`. Všechno se vejde do **bezplatného tarifu**.
+`https://ugustiku-web.pages.dev`. Všechno se vejde do **bezplatného tarifu**.
 
 Počítej zhruba s **hodinou** a dělej to v klidu — každý krok si na konci
 ověříme, takže poznáš, kde se případně něco zadrhlo.
@@ -185,7 +185,14 @@ git branch -M main && git push -u origin main
 ## Krok 7 — Propoj Cloudflare s GitHubem
 
 1. V Cloudflare dashboardu vlevo: **Compute (Workers)** → **Workers & Pages**.
-2. **Create application** → záložka **Pages** → **Connect to Git**.
+2. **Create application**. Cloudflare teď ukazuje novou obrazovku
+   **„Make something new“**, která zakládá Workery – tou nechodí.
+   Sjeď úplně dolů a klikni na odkaz **„Continue to Pages“**
+   („Need to use the legacy Pages and functions?“). Pak **Connect to Git**.
+
+   > Proč ne Worker: projekt stojí na Pages Functions – složka `functions/`
+   > se směrováním podle názvů souborů, `_middleware.js` a
+   > `pages_build_output_dir`. Ve Workeru by se serverová část musela přepsat.
 3. Povol Cloudflare přístup k GitHubu. Vyber **jen repozitář `ugustiku-web`**
    (ne „All repositories").
 4. Vyber repozitář a dej **Begin setup**.
@@ -193,7 +200,7 @@ git branch -M main && git push -u origin main
 
    | Políčko | Hodnota |
    |---|---|
-   | **Project name** | `ugustiku` |
+   | **Project name** | `ugustiku-web` |
    | **Production branch** | `main` |
    | **Framework preset** | `None` |
    | **Build command** | *nech prázdné* |
@@ -202,6 +209,11 @@ git branch -M main && git push -u origin main
    > Projekt nic nekompiluje — soubory v repozitáři jsou přesně to, co běží.
    > Kdyby Cloudflare samo nabídlo nějaký build command, smaž ho.
 
+   > Název projektu si Cloudflare předvyplňuje podle repozitáře a určuje
+   > adresu `<název>.pages.dev`. Později se přejmenovat nedá – šlo by jen
+   > projekt smazat a založit znovu. Na dlouhou trať to nevadí, web
+   > stejně pojede na ugustiku.cz; `.pages.dev` je jen dočasná adresa.
+
 6. **Save and Deploy.**
 
 První nasazení trvá asi minutu. **Veřejný web už po něm funguje** — jméno
@@ -209,14 +221,14 @@ a heslo potřebuje jen přihlášení do administrace, které nastavíme v kroku
 Do té doby `/admin` heslo nepřijme.
 
 **Ověření:** v projektu je nasazení se zeleným **Success** a adresa
-`https://ugustiku.pages.dev`.
+`https://ugustiku-web.pages.dev`.
 
 ---
 
 ## Krok 8 — Nastav heslo jako secret
 
 ```bash
-npx wrangler pages secret put ADMIN_HESLO_HASH --project-name ugustiku
+npx wrangler pages secret put ADMIN_HESLO_HASH --project-name ugustiku-web
 ```
 
 Příkaz se zeptá na hodnotu — vlož ten řetězec `pbkdf2$25000$…` z kroku 5
@@ -225,7 +237,7 @@ a potvrď Enterem. (Při vkládání se nic nevypíše, to je správně.)
 **Ověření:**
 
 ```bash
-npx wrangler pages secret list --project-name ugustiku
+npx wrangler pages secret list --project-name ugustiku-web
 ```
 
 V seznamu je `ADMIN_HESLO_HASH`. Hodnota vidět není — tak to má být.
@@ -243,7 +255,7 @@ Nebo prostě pošli na GitHub jakoukoli změnu — nasazení se spustí samo.
 
 ## Krok 10 — Vyzkoušej hotový web
 
-Otevři **`https://ugustiku.pages.dev`**.
+Otevři **`https://ugustiku-web.pages.dev`**.
 
 | Co zkusit | Co má nastat |
 |---|---|
