@@ -36,15 +36,25 @@ import { createInterface } from 'node:readline';
 const OPAKOVANI = 25000;
 const NEJKRATSI_HESLO = 12;
 
-/* Slova pro návrh hesla: krátká, česká, jednoznačně se píšou a dobře se
-   ťukají na mobilu. Pět slov z téhle stovky dá přes miliardu miliard
-   kombinací – na hádání přes přihlašovací stránku zdaleka dost. */
-const SLOVA = `bota brána buk cesta cibule čaj člun dort dub duha dveře hora houba hrad hrnek
-jablko jahoda jelen ježek kámen kapr klíč kniha kolo komín koš kotva kovář krab kruh křeslo
-květ labuť lampa les lípa liška loď louka lžíce medvěd meloun město most motýl mrak myš nebe
-noha nůž oblak oheň okno ořech ovce palec pavouk pecka pero pes píseň plot pole potok prsten
-pták rak ryba rýč sad sklo slunce sova stůl strom svíčka šála šíp štít tulipán tužka ulice
-váza včela velryba věž vítr voda vlak vlk vrba zahrada zámek zvon žába žebřík židle`
+/*
+  Slova pro návrh hesla: krátká, česká a schválně **bez diakritiky**.
+  Heslo se ťuká hlavně na telefonu v kuchyni, kde se háček dělá podržením
+  klávesy – a navíc ho konzole na Windows umí zobrazit rozsypaně, takže by
+  člověk opsal něco jiného, než co se doopravdy zahašovalo.
+
+  97 slov, pět zvolených: 97^5 je asi 8,6 miliardy kombinací. Přes
+  přihlašovací stránku projde nejvýš 5 pokusů za 15 minut, takže uhodnout
+  takové heslo by trvalo statisíce let. Kdyby někdo otisk ukradl přímo
+  z účtu Cloudflare a hádal ho u sebe, mluvíme o měsících práce grafické
+  karty – tam už je poslední obranou těch 25 000 opakování PBKDF2.
+*/
+const SLOVA = `bota brana buk cesta cibule caj clun dort dub duha dvere hora houba hrad hrnek
+jablko jahoda jelen jezek kamen kapr klic kniha kolo komin kos kotva kovar
+krab kruh kreslo kvet labut lampa les lipa liska lod louka lzice medved meloun
+mesto most motyl mrak mys nebe noha nuz oblak ohen okno orech ovce palec
+pavouk pecka pero pes pisen plot pole potok prsten ptak rak ryba ryc sad sklo
+slunce sova stul strom svicka sala sip stit tulipan tuzka ulice vaza vcela
+velryba vez vitr voda vlak vlk vrba zahrada zamek zvon zaba zebrik zidle`
   .split(/\s+/)
   .filter(Boolean);
 
