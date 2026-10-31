@@ -1,0 +1,159 @@
+/*
+  Vzhled administrace.
+
+  Navazuje na /styl.css – odtud bere barvy, písma a logo. Řídí se dvěma
+  pravidly, protože se tohle ovládá hlavně z mobilu jednou rukou:
+    – nic, na co se ťuká, nesmí být nižší než 48 px
+    – všechna políčka mají písmo aspoň 16 px, jinak si Safari na iPhonu
+      při psaní stránku přiblíží a uživatel se ztratí
+*/
+
+.admin{background:var(--bg)}
+.awrap{max-width:1500px;margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px))}
+
+/* ---------------------------  tlačítka  --------------------------- */
+
+.atlac{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:12px 20px;border:2px solid var(--line-2);border-radius:14px;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;font-weight:700;line-height:1.2;text-decoration:none;cursor:pointer;transition:border-color .2s ease,background .2s ease,color .2s ease}
+.atlac:hover{border-color:var(--blue);color:var(--ink)}
+.atlac:disabled{opacity:.45;cursor:default}
+.atlac.hlavni{background:var(--blue);border-color:var(--blue);color:var(--on-dark)}
+.atlac.hlavni:hover{background:var(--night-2);border-color:var(--night-2);color:var(--on-dark)}
+.atlac.tiche{border-color:transparent;background:transparent;color:var(--muted);font-weight:600}
+.atlac.tiche:hover{color:var(--ink)}
+.atlac.drobne{min-height:44px;padding:10px 14px;font-size:15px}
+.atlac.nebezpecne:hover{border-color:var(--rasp);color:var(--rasp)}
+
+/* -------------------------  přihlášení  ------------------------- */
+
+.prihlaseni{display:flex;align-items:center;justify-content:center;min-height:100vh;min-height:100dvh;padding:24px}
+.prihlbox{width:100%;max-width:420px;background:var(--paper);border-radius:28px;padding:36px 30px;box-shadow:0 24px 60px rgba(24,34,74,.12);display:flex;flex-direction:column;gap:18px}
+.prihlznacka{display:flex;align-items:center;gap:12px;font-family:var(--display);font-size:20px;font-weight:800}
+.prihlbox h1{margin:0;font-size:26px}
+.prihlbox form{display:flex;flex-direction:column;gap:10px}
+.prihlbox label{font-size:15px;font-weight:700}
+.prihlbox input{min-height:52px;padding:12px 16px;border:2px solid var(--line-2);border-radius:14px;background:var(--bg);font-family:var(--body);font-size:17px;color:var(--ink)}
+.prihlbox input:focus{outline:3px solid var(--rasp);outline-offset:2px}
+.prihlbox .chyba{margin:0;padding:14px 16px;border-radius:14px;background:#FCE8EF;color:#8A1B44;font-size:15px;line-height:1.5}
+.prihlbox .chyba code{font-size:14px;background:rgba(0,0,0,.06);padding:2px 6px;border-radius:6px}
+.prihlbox .zpet{font-size:15px;font-weight:600;text-decoration:none}
+
+/* ---------------------------  hlavička  --------------------------- */
+
+.ahlav{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--line)}
+.ahlavin{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:10px}
+.aznacka{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:18px;font-weight:800}
+.aznacka svg{flex:none}
+
+/* ------------------------  výběr týdne  ------------------------ */
+
+.atyden{display:flex;align-items:stretch;gap:10px;margin-top:16px}
+.asipka{flex:none;width:52px;display:flex;align-items:center;justify-content:center;border:2px solid var(--line-2);border-radius:14px;background:var(--paper);color:var(--ink);font-size:24px;font-weight:700;text-decoration:none}
+.asipka:hover{border-color:var(--blue);color:var(--ink)}
+.atydeninfo{flex:1 1 auto;min-width:0;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2px;padding:10px 12px;background:var(--paper);border:2px solid var(--line-2);border-radius:14px;text-align:center}
+.atydeninfo strong{font-family:var(--display);font-size:19px;font-weight:800}
+
+.odznak{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:13px;font-weight:700}
+.odznak.koncept{background:var(--tint);color:var(--blue)}
+.odznak.venku{background:var(--green-bg);color:var(--green)}
+
+/* --------------------------  panel akcí  -------------------------- */
+
+.apanel{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:12px}
+.apanel .atlac{flex:1 1 auto}
+.ulozeno{flex:1 0 100%;order:-1;font-size:14px;font-weight:600;color:var(--muted);min-height:20px}
+.ulozeno.uklada{color:var(--blue)}
+.ulozeno.chyba{color:var(--rasp)}
+
+/* -----------------  přepínač Upravit / Náhled  ----------------- */
+
+.aprepinac{display:flex;gap:8px;margin-top:16px}
+.aprepinac .atlac{flex:1 1 0}
+.aprepinac .atlac[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:var(--on-dark)}
+
+/* ---------------------------  sloupce  --------------------------- */
+
+.asloupce{margin-top:16px;padding-bottom:40px}
+.asloupec-nahled{display:flex;flex-direction:column;gap:8px}
+.anahledpopis{margin:0;font-size:14px;color:var(--muted)}
+#nahled{width:100%;height:70vh;min-height:420px;border:2px solid var(--line-2);border-radius:18px;background:var(--paper)}
+
+/* Na mobilu je vidět vždycky jen jedna polovina, podle přepínače. */
+.asloupce[data-rezim="upravit"] .asloupec-nahled{display:none}
+.asloupce[data-rezim="nahled"] .asloupec-editor{display:none}
+
+/* ------------------------  záložky dnů  ------------------------ */
+
+.adny{display:flex;gap:6px}
+.aden{flex:1 1 0;min-width:0;min-height:56px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;border:2px solid var(--line-2);border-radius:14px;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:16px;font-weight:700;cursor:pointer}
+.aden small{font-size:12px;font-weight:600;color:var(--muted)}
+.aden:hover{border-color:var(--blue)}
+.aden[aria-pressed="true"]{background:var(--blue);border-color:var(--blue);color:var(--on-dark)}
+.aden[aria-pressed="true"] small{color:var(--on-dark)}
+.aden .tecka{width:6px;height:6px;border-radius:50%;background:var(--line-2)}
+.aden.maobsah .tecka{background:var(--green)}
+.aden.zavreno .tecka{background:var(--rasp)}
+.aden[aria-pressed="true"] .tecka{background:var(--on-dark)}
+
+/* ---------------------------  editor dne  --------------------------- */
+
+#editor{margin-top:14px;display:flex;flex-direction:column;gap:14px}
+
+.zavrenobox{background:var(--paper);border:2px solid var(--line-2);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px}
+
+/* Přepínač ve tvaru posuvníku – na mobilu se trefí snáz než zaškrtávátko. */
+.vypinac{display:flex;align-items:center;gap:12px;min-height:48px;font-size:16px;font-weight:700;cursor:pointer}
+.vypinac input{position:absolute;opacity:0;width:0;height:0}
+.vypinac .draha{flex:none;width:54px;height:30px;border-radius:999px;background:var(--line-2);position:relative;transition:background .2s ease}
+.vypinac .draha::after{content:'';position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:var(--paper);box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .2s ease}
+.vypinac input:checked + .draha{background:var(--blue)}
+.vypinac input:checked + .draha::after{transform:translateX(24px)}
+.vypinac input:focus-visible + .draha{outline:3px solid var(--rasp);outline-offset:3px}
+
+.pole{display:flex;flex-direction:column;gap:6px}
+.pole > span{font-size:14px;font-weight:700;color:var(--ink-2)}
+.pole input[type="text"],.pole input[type="number"],.pole textarea{min-height:50px;padding:12px 14px;border:2px solid var(--line-2);border-radius:14px;background:var(--bg);font-family:var(--body);font-size:16px;color:var(--ink);width:100%}
+.pole input:focus,.pole textarea:focus{outline:3px solid var(--rasp);outline-offset:2px}
+.pole.cena{max-width:170px}
+
+.jidlo{background:var(--paper);border:2px solid var(--line-2);border-radius:18px;padding:16px;display:flex;flex-direction:column;gap:12px}
+.jidlo.polevka{border-left:6px solid var(--blue)}
+.jidlo.hlavni{border-left:6px solid var(--rasp)}
+.jhlava{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.jnastroje{display:flex;gap:6px;margin-left:auto}
+.jnastroje .atlac{min-width:48px;padding:10px 12px;font-size:18px}
+
+/* Volba typu jídla – dvě poloviny jednoho tlačítka. */
+.typ{display:flex;border:2px solid var(--line-2);border-radius:14px;overflow:hidden}
+.typ label{flex:1 1 0;min-height:48px;display:flex;align-items:center;justify-content:center;padding:0 16px;font-size:15px;font-weight:700;cursor:pointer;white-space:nowrap}
+.typ input{position:absolute;opacity:0;width:0;height:0}
+.typ label:has(input:checked){background:var(--ink);color:var(--on-dark)}
+.typ label:has(input:focus-visible){outline:3px solid var(--rasp);outline-offset:-3px}
+
+.alergenybox > summary{min-height:48px;display:flex;align-items:center;gap:8px;padding:12px 14px;border:2px solid var(--line-2);border-radius:14px;background:var(--bg);font-size:15px;font-weight:700;cursor:pointer;list-style:none}
+.alergenybox > summary::-webkit-details-marker{display:none}
+.alergenybox > summary::before{content:'▸';font-size:13px}
+.alergenybox[open] > summary::before{content:'▾'}
+.alergeny{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:4px;padding:12px 4px 4px}
+.alergeny label{display:flex;align-items:center;gap:10px;min-height:46px;padding:4px 10px;border-radius:12px;font-size:15px;cursor:pointer}
+.alergeny label:hover{background:var(--bg)}
+.alergeny input{width:22px;height:22px;flex:none;accent-color:var(--blue)}
+
+.prazdnyden{background:var(--paper);border:2px dashed var(--line-2);border-radius:18px;padding:28px 20px;text-align:center;color:var(--muted);font-size:15px}
+
+/* ----------------------  širší obrazovky  ---------------------- */
+
+@media (min-width:1000px){
+  /* Na počítači se vedle sebe vejde editor i náhled, přepínač je zbytečný. */
+  .aprepinac{display:none}
+  .asloupce{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:start}
+  .asloupce[data-rezim="upravit"] .asloupec-nahled,
+  .asloupce[data-rezim="nahled"] .asloupec-editor{display:flex}
+  .asloupec-nahled{position:sticky;top:84px}
+  #nahled{height:calc(100vh - 140px)}
+  .ulozeno{flex:0 0 auto;order:0;margin-right:auto}
+  .apanel .atlac{flex:0 0 auto}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .admin *,.admin *::before,.admin *::after{transition-duration:.01s !important}
+}
