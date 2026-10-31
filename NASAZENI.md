@@ -306,6 +306,45 @@ nasazení nepovedlo, běží dál to předchozí — web nespadne.
 
 ---
 
+## Zapomenuté heslo do administrace
+
+Heslo **nejde zjistit ani obnovit** – uložený je jen jeho otisk, ze
+kterého se zpátky spočítat nedá. To je záměr: kdyby to šlo,
+dostal by se k němu i kdokoli, kdo by se dostal k účtu Cloudflare.
+Místo obnovení se nastaví nové, které to staré přepíše.
+
+1. Vyrob nový otisk. `--navrhni` heslo vypíše na obrazovku, takže
+   si ho můžeš rovnou uložit do správce hesel a nehrozí překlep:
+
+   ```bash
+   node scripts/hash-hesla.mjs --navrhni
+   ```
+
+2. Vlož otisk `pbkdf2$25000$…` do Cloudflare:
+
+   ```bash
+   npx wrangler pages secret put ADMIN_HESLO_HASH --project-name ugustiku-web
+   ```
+
+3. **Spusť nové nasazení.** Bez něj běží dál staré s původním heslem –
+   secret se k nasazení připojuje ve chvíli, kdy vzniká. Stačí jakýkoli
+   `git push` do `main`, nebo v dashboardu **Deployments** → **⋯** →
+   **Retry deployment**.
+
+> Do přihlašovacího políčka patří **heslo**, ne řetězec `pbkdf2$…`.
+> Ten je jen jeho otisk a do Cloudflare se vkládá jednou, v kroku 2 výše.
+
+**Pět špatných pokusů zavře přihlašování na 15 minut**, zvlášť pro každou
+síť, ze které se připojuješ (mobilní data a wifi se počítají zvlášť).
+Po úspěšném přihlášení se počítadlo vynuluje samo, blokace vyprší sama.
+Když se nedá čekat, jde smažat řádek z tabulky `pokusy`:
+
+```bash
+npx wrangler d1 execute ugustiku --remote --command "DELETE FROM pokusy WHERE ip = '…'"
+```
+
+---
+
 ## Na co si dát pozor
 
 **Dočasná adresa se neindexuje.** Dokud web běží na `*.pages.dev`, posílá
