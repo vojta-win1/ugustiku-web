@@ -267,19 +267,20 @@ Otevři **`https://ugustiku-web.pages.dev`**.
 | **Zveřejnit na webu** | Změna je na webu **do minuty** (stránka se minutu kešuje) |
 | Export obrázku | Stáhne se PNG — zkontroluj háčky a čárky |
 
-### ⚠️ Kontrola, kterou jsem ti slíbil už ve fázi 2
+### ✅ Kontrola slibovaná ve fázi 2 – hotovo
 
-Bezplatný tarif dává každému požadavku **10 ms procesorového času**.
-Přihlašování počítá PBKDF2 s 25 000 opakováními, což podle měření trvá
-zhruba 4 ms — mělo by se to pohodlně vejít. **Teď se to poprvé ověřuje
-doopravdy, na skutečném Cloudflare.**
+Bezplatný tarif dává každému požadavku **10 ms procesorového času** a
+přihlašování počítá PBKDF2 s 25 000 opakováními. Jestli se to vejde,
+se dá zjistit až na ostrém serveru.
 
-- **Přihlášení proběhne** → je to v pořádku, hotovo.
-- **Objeví se „Error 1102 — Worker exceeded resource limits"** → limit se
-  přetáhl. Oprava: v `scripts/hash-hesla.mjs` sniž `OPAKOVANI` z `25000`
-  třeba na `12000`, pusť skript znovu, nastav nový secret (krok 8) a znovu
-  nasaď. Počet opakování je součástí otisku, v kódu se nic dalšího nemění.
-  Pak se mi ozvi, ať to zapíšeme do README.
+**Ověřeno 31. 10. 2026: vejde.** Požadavek probehl bez chyby 1102 a
+zapsal chybný pokus do tabulky `pokusy`, což se děje až po dopočítání
+otisku. `OPAKOVANI` tedy zůstává 25000 a nic se nemění.
+
+> Kdyby se **Error 1102 – Worker exceeded resource limits** přece jen
+> někdy objevil: ve `scripts/hash-hesla.mjs` sniž `OPAKOVANI` třeba na
+> `12000`, pusť skript znovu, nastav nový secret (krok 8) a nasaď znovu
+> (krok 9). Počet opakování je součástí otisku, v kódu se nic nemění.
 
 ### Ještě zkus z telefonu
 
