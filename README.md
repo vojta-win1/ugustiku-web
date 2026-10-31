@@ -144,6 +144,10 @@ Bezplatný tarif Cloudflare dává každému požadavku **10 ms procesorového
 | 50 000 | 6,9 ms |
 | 100 000 | 14,4 ms — nevejde se |
 
+**Ověřeno na ostrém serveru** (31. 10. 2026): přihlašovací požadavek
+s 25 000 opakováními probehl normálně, bez chyby 1102 – špatný pokus se
+zapsal do tabulky `pokusy`, což se stane až po dopočítání otisku.
+
 Proto 25 000 a jako protiváhu skript nepřijme heslo kratší než 12 znaků.
 Hádat heslo přes web stejně nejde kvůli těm pěti pokusům; otisk by musel
 někdo nejdřív ukrást přímo z účtu Cloudflare. Počet opakování je součástí
