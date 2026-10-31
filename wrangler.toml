@@ -16,4 +16,4 @@ database_name = "ugustiku"
 # database_id vypíše příkaz `npx wrangler d1 create ugustiku` – postup je
 # v NASAZENI.md, krok 3. Pro lokální běh (--local) se nepoužívá, data jsou
 # ve složce .wrangler/. Tajné to není, klidně může být v gitu.
-database_id = "zatim-nevyplneno"
+database_id = "7c4f207c-c0dc-4667-bb18-ceb3bc6e6beb"
