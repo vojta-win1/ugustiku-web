@@ -39,7 +39,12 @@ export async function onRequest({ next }) {
       "connect-src 'self'",
       "form-action 'self'",
       "frame-ancestors 'self'",
-      "base-uri 'none'",
+      /*
+        'self' a ne 'none': knihovna html-to-image si při výrobě obrázku
+        nastavuje <base>, aby správně dopočítala relativní adresy v CSS.
+        Proti útoku to chrání pořád – podvrhnout cizí doménu nejde.
+      */
+      "base-uri 'self'",
       "object-src 'none'",
     ].join('; ')
   );

@@ -430,6 +430,47 @@
     vykresliStavTydne();
   }
 
+  /* ----------------------------  export  ---------------------------- */
+
+  var exportStav = document.getElementById('exportstav');
+  var exportTlacitka = [].slice.call(document.querySelectorAll('[data-export]'));
+
+  function exportHlas(text, trida) {
+    exportStav.textContent = text;
+    exportStav.className = 'exportstav' + (trida ? ' ' + trida : '');
+  }
+
+  exportTlacitka.forEach(function (tlacitko) {
+    tlacitko.addEventListener('click', async function () {
+      var typ = tlacitko.getAttribute('data-export');
+
+      // Export má odpovídat tomu, co je uložené – ať se nestane, že se
+      // obrázek rozejde s webem.
+      if (zmeneno) await uloz();
+
+      exportTlacitka.forEach(function (t) { t.disabled = true; });
+      try {
+        var vysledek = await window.ugExport.vyrob(
+          typ,
+          { tyden: tyden, denIndex: aktivni, alergeny: ALERGENY },
+          exportHlas
+        );
+
+        if (vysledek.zmenseni === 0) {
+          exportHlas('Hotovo, ale lístek je opravdu dlouhý – zkontroluj, jestli je text čitelný.', 'chyba');
+        } else if (vysledek.zmenseni < 0.6) {
+          exportHlas('Hotovo: ' + vysledek.jmeno + ' · písmo muselo být dost zmenšené.');
+        } else {
+          exportHlas('Hotovo: ' + vysledek.jmeno);
+        }
+      } catch (chyba) {
+        exportHlas('Export se nepovedl: ' + chyba.message, 'chyba');
+      } finally {
+        exportTlacitka.forEach(function (t) { t.disabled = false; });
+      }
+    });
+  });
+
   /* --------------------  přepínač Upravit / Náhled  -------------------- */
 
   var sloupce = document.getElementById('sloupce');

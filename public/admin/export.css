@@ -1,0 +1,122 @@
+/*
+  Rozložení obrázku pro Instagram a letáku do PDF.
+
+  Vychází z lístku, který restaurace dává na Instagram (navrh/vzor-listek.jpg):
+  kolečko s cenou menu vlevo nahoře, logo, nadpis JÍDELNÍ LÍSTEK, termín
+  týdne, dny podtržené modře a jídla s tečkovanou linkou k ceně. Písma a
+  barvy jsou ale z nového webu.
+
+  Jak funguje zmenšování, aby se text vždycky vešel:
+    – Rám (okraje, kolečko, logo, nadpis) je v pixelech a nemění se.
+    – Všechno uvnitř .exObsah je v jednotkách em, tedy v násobcích
+      velikosti písma té jedné schránky. Zmenšení celého lístku je proto
+      jediné číslo – font-size na .exObsah – a dopočítá ho export.js.
+
+  Celá sestava stojí mimo obrazovku, host ji nikdy nevidí; slouží jen
+  jako předloha, ze které se udělá obrázek.
+*/
+
+/* Schránka stojí daleko vlevo za okrajem okna, aby nebyla vidět a
+   nedělala stránce vodorovný posuvník. */
+.exSchranka{position:fixed;left:-20000px;top:0;z-index:-1;pointer-events:none}
+
+.exList{
+  position:relative;
+  box-sizing:border-box;
+  display:flex;flex-direction:column;
+  background:#FFFFFF;color:var(--ink);
+  font-family:var(--body);
+  padding:40px 54px 38px;
+  /* Obrázek vzniká z téhle předlohy 1:1, takže velikosti jsou v pixelech. */
+}
+.exList *{box-sizing:border-box}
+
+/* ----------------------------  hlavička  ---------------------------- */
+
+/*
+  Kolečko s cenou menu je položené do rohu přes volné místo vedle nadpisu –
+  stejně jako na lístku, který restaurace dává na Instagram. Nezabírá tím
+  žádnou výšku, která by chyběla jídlům.
+*/
+.exKolecko{
+  position:absolute;left:46px;top:30px;
+  width:196px;height:196px;border-radius:50%;
+  background:var(--rasp);color:#FFFFFF;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:14px;
+  transform:rotate(-7deg);
+  font-weight:700;line-height:1.15;
+}
+.exKolecko .k1{font-family:var(--display);font-size:37px;font-weight:800;letter-spacing:.02em}
+.exKolecko .k2{font-size:13px;letter-spacing:.02em;margin-top:3px}
+.exKolecko .k3{font-family:var(--display);font-size:27px;font-weight:800;margin-top:5px}
+
+.exZnacka{flex:none;display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center}
+.exZnacka svg{flex:none}
+.exZnacka .nazev{font-family:var(--display);font-size:31px;font-weight:800;letter-spacing:.04em;color:var(--blue)}
+.exZnacka .slogan{font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--rasp)}
+
+.exTitul{
+  flex:none;margin:16px 0 0;text-align:center;
+  font-family:var(--display);font-size:58px;font-weight:800;line-height:1;
+  letter-spacing:-.01em;color:var(--blue);
+}
+.exTermin{flex:none;margin:7px 0 16px;text-align:center;font-size:23px;font-weight:700;color:var(--ink-2)}
+
+/* -----------------------------  lístek  ----------------------------- */
+
+/*
+  Tahle schránka má pevnou výšku (zbytek listu) a zmenšuje se jí písmo,
+  dokud se obsah nevejde. overflow:hidden je tu jen jako pojistka –
+  export.js hlídá, aby se nic odříznout nemuselo.
+*/
+.exObsah{flex:1 1 auto;min-height:0;overflow:hidden;font-size:20px}
+
+.exDen{margin-bottom:.75em}
+.exDen:last-child{margin-bottom:0}
+
+.exDenNazev{
+  margin:0 0 .3em;
+  font-family:var(--display);font-size:1.4em;font-weight:800;
+  letter-spacing:.04em;text-transform:uppercase;color:var(--blue);
+  border-bottom:.12em solid var(--blue);
+  display:inline-block;padding-bottom:.08em;
+}
+
+.exJidlo{display:flex;align-items:flex-end;gap:.4em;margin-top:.38em;font-size:1.45em;line-height:1.15}
+.exJidlo .nazev{flex:0 1 auto;min-width:0;font-weight:600}
+/* Tečkovaná linka k ceně. Zarovnání na spodní okraj zajistí, že u delšího
+   názvu, který se zalomí, zůstanou tečky na posledním řádku. */
+.exJidlo .tecky{flex:1 1 auto;min-width:1.5em;border-bottom:.09em dotted var(--line-2);transform:translateY(-.28em)}
+.exJidlo .cena{flex:none;font-family:var(--display);font-weight:800;white-space:nowrap;font-variant-numeric:tabular-nums}
+
+.exBezMasa{
+  display:inline-block;margin-left:.4em;padding:.08em .45em;border-radius:1em;
+  background:var(--green-bg);color:var(--green);
+  font-size:.7em;font-weight:700;vertical-align:.1em;white-space:nowrap;
+}
+
+.exAlg{margin-top:.05em;font-size:.92em;line-height:1.3;color:var(--ink-2)}
+
+.exZavreno{margin-top:.5em;font-size:1.3em;font-weight:700;color:var(--rasp)}
+.exPrazdno{margin-top:.5em;font-size:1.2em;color:var(--muted)}
+
+/* -----------------------  patička (jen leták A4)  ----------------------- */
+
+.exPata{flex:none;background:transparent;color:var(--ink);margin-top:24px;padding-top:18px;border-top:2px solid var(--line);display:flex;flex-direction:column;gap:12px}
+.exPata .nadpis{font-size:15px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--rasp)}
+.exLegenda{display:grid;grid-template-columns:repeat(4,1fr);gap:3px 18px;margin:0;padding:0;list-style:none;font-size:14px;color:var(--ink-2)}
+.exLegenda b{color:var(--ink)}
+.exKontakt{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;font-size:16px;font-weight:600;color:var(--ink-2)}
+.exKontakt strong{color:var(--ink)}
+
+/* --------------------  svislý obrázek do Stories  -------------------- */
+
+/* Jeden den, hodně velké písmo – kouká se na to na celou výšku displeje. */
+.exList.story{padding:70px 64px 70px}
+.exList.story .exTitul{font-size:76px}
+.exList.story .exTermin{font-size:34px;margin-bottom:40px}
+/* U jednoho dne zbývá místo – rozdělíme ho nad a pod lístek, ať nevisí
+   nahoře. 'safe' hlídá, že se při delším menu nic neschová nad okrajem. */
+.exList.story .exObsah{font-size:30px;display:flex;flex-direction:column;justify-content:center;justify-content:safe center}
+.exList.story .exKolecko{width:240px;height:240px;left:56px;top:50px}

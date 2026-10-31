@@ -157,3 +157,13 @@
 @media (prefers-reduced-motion: reduce){
   .admin *,.admin *::before,.admin *::after{transition-duration:.01s !important}
 }
+
+/* ----------------------------  export  ---------------------------- */
+
+.aexport{margin-top:16px;padding:16px;background:var(--paper);border:2px solid var(--line-2);border-radius:18px;display:flex;flex-direction:column;gap:12px}
+.aexporthlava{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:6px 16px}
+.aexporthlava strong{font-family:var(--display);font-size:17px;font-weight:800}
+.exportstav{font-size:14px;font-weight:600;color:var(--muted)}
+.exportstav.chyba{color:var(--rasp)}
+.aexporttlacitka{display:flex;flex-wrap:wrap;gap:8px}
+.aexporttlacitka .atlac{flex:1 1 220px}

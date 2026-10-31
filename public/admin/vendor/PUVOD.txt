@@ -1,0 +1,12 @@
+Knihovny třetích stran použité pro export obrázku a PDF.
+Stahuje je scripts/stahnout-knihovny.mjs, ručně se needitují.
+
+html-to-image.js
+    html-to-image 1.11.13, licence MIT
+    udělá z kusu stránky obrázek PNG
+    https://unpkg.com/html-to-image@1.11.13/dist/html-to-image.js
+
+jspdf.umd.min.js
+    jspdf 4.2.1, licence MIT
+    složí PDF ve formátu A4
+    https://unpkg.com/jspdf@4.2.1/dist/jspdf.umd.min.js

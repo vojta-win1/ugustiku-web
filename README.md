@@ -6,8 +6,8 @@ který si restaurace sama spravuje přes administraci.
 Postaveno na **Cloudflare Pages** (statické soubory + serverové funkce) a
 databázi **Cloudflare D1**. Všechno se vejde do bezplatného tarifu.
 
-> **Stav:** hotové fáze 1 a 2 (veřejný web, přihlášení, editor lístku).
-> Export obrázku a PDF přibude ve fázi 3, nasazení ve fázi 4.
+> **Stav:** hotové fáze 1–3 (veřejný web, přihlášení, editor, export).
+> Zbývá fáze 4 – nasazení na Cloudflare.
 
 ---
 
@@ -19,7 +19,8 @@ databázi **Cloudflare D1**. Všechno se vejde do bezplatného tarifu.
 | `functions/` | Serverová část. Název souboru = adresa na webu |
 | `lib/` | Sdílený kód (datum, databáze, vykreslení lístku, šablona stránky) |
 | `scripts/` | Pomocné skripty, které se pouštějí ručně |
-| `public/admin/` | Vzhled a ovládání editoru lístku |
+| `public/admin/` | Vzhled a ovládání editoru lístku a exportu |
+| `public/admin/vendor/` | Stažené knihovny pro export (viz `PUVOD.txt`) |
 | `navrh/` | Schválený návrh designu a vzor lístku z Instagramu. Nepoužívá se za běhu |
 | `schema.sql`, `seed.sql` | Struktura databáze a ukázková data |
 
@@ -166,6 +167,39 @@ ve skriptu a heslo nastavit znovu.
   veřejný web, takže nemůže ukazovat něco jiného. Na mobilu se mezi
   editorem a náhledem přepíná tlačítky **Upravit / Náhled**.
 
+### Export pro Instagram a tisk
+
+V editoru dole jsou tři tlačítka. Všechno se počítá přímo v prohlížeči,
+takže to nic nestojí a funguje to i na telefonu.
+
+| Tlačítko | Co vyrobí | Doba na počítači |
+|---|---|---|
+| Obrázek pro Instagram | PNG 1080 × 1350 (4:5), celý týden | ~1 s |
+| Leták PDF (A4) | PDF A4 na výšku, s legendou alergenů a kontaktem | ~4 s |
+| Menu dne do Stories | PNG 1080 × 1920, právě vybraný den | ~0,5 s |
+
+Na telefonu to trvá déle, u letáku klidně deset vteřin. Průběh je vidět
+vedle nadpisu „Export“.
+
+Vzhled vychází z lístku, který restaurace dává na Instagram
+(`navrh/vzor-listek.jpg`): kolečko s cenou menu, logo, nadpis, dny
+podtržené modře a tečkovaná linka k ceně. Písma a barvy jsou z nového webu.
+
+**Text se vždycky vejde.** Po složení se změří výška a půlením intervalu
+se najde největší písmo, při kterém se celý lístek vejde — nikdy se nic
+neořezává. Krátký lístek se naopak zvětší, aby obrázek nekončil
+poloprázdný. Když je lístek opravdu dlouhý, dá to editor vědět, ať se
+výsledek zkontroluje.
+
+**Diakritika v exportu.** Písma se do obrázku vkládají celá. Proto je
+hostujeme sami a proto stahujeme podmnožinu `latin-ext` — bez ní by
+v obrázku chyběly háčky a čárky. Obrázek se schválně kreslí dvakrát
+a bere se až druhý: Safari na iPhonu napoprvé občas nestihne písma
+načíst a vyrobil by lístek systémovým písmem.
+
+**Kontakt v patičce letáku** je zatím zástupný. Až budou známé skutečné
+údaje, uprav je nahoře v `public/admin/export.js` (konstanta `KONTAKT`).
+
 ### Co si vyzkoušet
 
 1. Otevři `/admin`, přihlas se.
@@ -173,7 +207,9 @@ ve skriptu a heslo nastavit znovu.
 3. Zkus přidat jídlo, zaškrtnout alergeny, posunout ho, zavřít den.
 4. Dej **Zveřejnit na webu** a podívej se na `/`.
 5. Zkus zavřít a znovu otevřít stránku — rozepsané se neztratí.
-6. Zkus se pětkrát přihlásit špatným heslem a uvidíš patnáctiminutovou pauzu.
+6. Dole dej **Obrázek pro Instagram** a podívej se na stažený soubor —
+   zkontroluj háčky a čárky.
+7. Zkus se pětkrát přihlásit špatným heslem a uvidíš patnáctiminutovou pauzu.
    (Odblokovat jde příkazem
    `npx wrangler d1 execute ugustiku --local --command="DELETE FROM pokusy"`.)
 
@@ -187,6 +223,14 @@ node scripts/test-vyber-dne.mjs
 Zkontroluje pravidla pro výběr dne — víkend, zavřený den, přechod do dalšího
 týdne. Běží bez databáze, dnešek se funkci podstrčí. Pusť po každé změně
 v `lib/listek.js`.
+
+```bash
+node scripts/stahnout-knihovny.mjs
+```
+Stáhne knihovny pro export (html-to-image, jsPDF) do `public/admin/vendor/`.
+Jsou v gitu, takže tohle je potřeba jen při aktualizaci. Netaháme je z CDN:
+export pak funguje nezávisle, nic se neposílá cizím serverům a obsahová
+politika stránky může zůstat přísná.
 
 ```bash
 node scripts/hash-hesla.mjs
@@ -269,7 +313,7 @@ Staženou podmnožinou je `latin-ext`. Obyčejný `latin` neobsahuje
   `node scripts/udelat-sablonu.mjs`.
 - Modrý pruh nahoře („Návrh nového webu…“) se před ostrým spuštěním smaže.
 - Mapa v kontaktu je zatím jen rámeček.
-- Export obrázku pro Instagram a letáku PDF — fáze 3.
+- Kontakt v patičce letáku (konstanta `KONTAKT` v `public/admin/export.js`).
 - Nasazení na Cloudflare — fáze 4.
 
 ## Doména
